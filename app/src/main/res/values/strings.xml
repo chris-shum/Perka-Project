@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">PerkaApp</string>
-    <string name="url"></string>
     <string name="resume">JVBERi0xLjMKJcTl8uXrp/Og0MTGCjQgMCBvYmoKPDwgL0xlbmd0aCA1IDAgUiAvRmls
 dGVyIC9GbGF0ZURlY29kZSA+PgpzdHJlYW0KeAHFnd2W3LaRx+/5FLzaM3NWbje/muxc
 rSwrlhzrI9I4Tk7OXiiybDnRVyw5Wu/77M0+TU72hfZXKIAEQJCNnunRyMfTTRAECqiq
@@ -1267,7 +1266,4 @@ IDAwMDAwIG4gCnRyYWlsZXIKPDwgL1NpemUgMzMgL1Jvb3QgMTQgMCBSIC9JbmZvIDEg
 MCBSIC9JRCBbIDxmNjU5OTU0ODE1MjQzMmU4NDIwY2VlOWY5OTM4MjIyYz4KPGY2NTk5
 NTQ4MTUyNDMyZTg0MjBjZWU5Zjk5MzgyMjJjPiBdID4+CnN0YXJ0eHJlZgo2MzcwMgol
 JUVPRgo=</string>
-
-
-
 </resources>

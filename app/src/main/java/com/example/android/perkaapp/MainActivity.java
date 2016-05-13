@@ -1,18 +1,23 @@
 package com.example.android.perkaapp;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import org.apache.commons.io.FileUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -42,24 +47,24 @@ public class MainActivity extends AppCompatActivity {
         mResume = (EditText) findViewById(R.id.resume);
         mSubmit = (Button) findViewById(R.id.submitButton);
 
-        mUrl = "https://api.perka.com/1/communication/job/apply";
-
-//        mResume.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-//                intent.setType("file/*");
-//                intent.addCategory(Intent.CATEGORY_OPENABLE);
-//                Intent finalIntent = Intent.createChooser(intent, "Select PDF");
-//                startActivityForResult(finalIntent, -1);
-//            }
-//        });
+//        mUrl = "https://api.perka.com/1/communication/job/apply";
+mUrl = "http://requestb.in/1n0vgdy1";
+        mResume.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setType("*/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select File"), 302);
+            }
+        });
 
 
         mSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getData();
+
             }
         });
 
@@ -109,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
         protected String doInBackground(String... params) {
             HttpURLConnection urlConnection = null;
             BufferedReader reader = null;
+
             try {
                 URL url = new URL(mUrl);
                 urlConnection = (HttpURLConnection) url.openConnection();
@@ -140,6 +146,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
 
+
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
@@ -157,31 +164,57 @@ public class MainActivity extends AppCompatActivity {
             return null;
         }
 
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-        }
     }
 
-//    public static String convertStringToBase64(String args) {
-//        byte[] encoded = Base64.decode(args, -1);
-//        String answer = new String(encoded);
-//        return answer;
-//    }
 
-//    public static String pdfToString(File file) {
-//        try {
-//            PDDocument pdDocument = PDDocument.load(file);
-//            PDFTextStripper textStripper = new PDFTextStripper();
-//            String content = textStripper.getText(pdDocument);
-//            return content;
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        return "Failed";
-//    }
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+
+            Uri selectedFileUri = data.getData();
+
+            Log.d("hmm", selectedFileUri.getPath());
+//            File file=new File(selectedFileUri.getPath());
+//            try {
+//                encodeFileToBase64Binary(file);
+//                Log.d("hmm2", "worked");
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//                Log.d("hmm2", "didn't work");
+//            }
+
+            convertFileToString(selectedFileUri.getPath());
+//            convertFileToString("/storage/emulated/0/Download/ResumeGA2.pdf");
+
+        }
+
+    }
+
+    public String convertFileToString(String pathOnSdCard){
+        Log.d("test", "why wont you work1?");
+
+        String strFile=null;
+        File file=new File(pathOnSdCard);
+        try {
+            byte[] data = FileUtils.readFileToByteArray(file);//Convert any file, image or video into byte array
+            strFile = Base64.encodeToString(data, Base64.NO_WRAP);//Convert byte array into string
+            Log.d("test", "why wont you work2?");
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.d("test", "why wont you work3?");
+        }
+        return strFile;
+    }
+
+    private static String encodeFileToBase64Binary(File fileName) throws IOException {
+        byte[] bytes = FileUtils.readFileToByteArray(fileName);
+        byte[] encoded = Base64.encode(bytes,-1);
+
+        String encodedString = new String(encoded);
+        return encodedString;
+    }
 
 }

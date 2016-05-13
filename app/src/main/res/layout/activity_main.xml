@@ -39,8 +39,8 @@
         android:id="@+id/position"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="ANDROID"
-        android:hint="Position ID" />
+        android:hint="Position ID"
+        android:text="ANDROID" />
 
 
     <EditText
@@ -70,11 +70,10 @@
         android:hint="Resume" />
 
     <Button
+        android:id="@+id/submitButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Submit"
-        android:id="@+id/submitButton"
-        />
+        android:text="Submit" />
 
 
 </LinearLayout>
